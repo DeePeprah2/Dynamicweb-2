@@ -25,10 +25,6 @@ sudo dnf install mysql-community-server -y
 sudo systemctl start mysqld
 sudo mysql -V
 
-# Secure the MySQL server
-sudo mysql_secure_installation
-
-
 # Install PHP-CURL
 sudo yum install php-curl
 
