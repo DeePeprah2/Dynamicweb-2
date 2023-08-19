@@ -1,0 +1,56 @@
+# Update the package index
+sudo yum update
+
+# Install Apache HTTP Server
+sudo yum install httpd -y
+
+#install Apache
+sudo systemctl start httpd
+sudo systemctl enable httpd
+
+# install php 
+sudo yum install php -y
+sudo yum install php-cli php-fpm php-mysqlnd php-bcmath php-ctype php-fileinfo php-json php-mbstring php-openssl php-pdo php-gd php-tokenizer php-xml -y
+ 
+# comand to install mysql community 
+sudo wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm 
+sudo ls -lrt
+# Install the MySQL server
+sudo dnf install mysql80-community-release-el9-1.noarch.rpm
+dnf repolist enabled | grep "mysql.*-community.*" 
+
+sudo dnf install mysql-community-server -y
+
+# Start the MySQL server
+sudo systemctl start mysqld
+sudo mysql -V
+
+# Secure the MySQL server
+sudo mysql_secure_installation
+
+
+# Install PHP-CURL
+sudo yum install php-curl
+
+# change  the max_execution_time value to 300 in the php.ini using sed
+sudo sed -i 's/^\(max_execution_time\s*=\s*\).*/\1300/' /etc/php.ini
+
+# check the command worked
+# cat httpd.conf | grep AllowOverride
+# enable mod_rewrite on ec2
+sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
+
+# check PHP version
+php -v
+
+# list installed PHP modules 
+php -m
+
+# check MySQL service status
+mysql -v
+
+# check memory_limit setting
+grep -i "memory_limit" /etc/php.ini
+
+# check max_execution_time setting
+grep "max_execution_time" ?etc/php.ini
