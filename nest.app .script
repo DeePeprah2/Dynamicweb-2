@@ -20,6 +20,7 @@ sed -i 's|^DB_USERNAME=.*|DB_USERNAME="Deepro"|' /var/www/html/.env
 sed -i 's|^DB_PASSWORD=.*|DB_PASSWORD="Deepro12345"|' /var/www/html/.env
 
 
+
 # Replace the 'AppServiceProvider.php' file 
 # step 3 of deploying dynamic web
 

@@ -22,6 +22,7 @@ dnf repolist enabled | grep "mysql.*-community.*"
 
 sudo dnf install mysql-community-server -y
 
+
 # Start the MySQL server
 sudo systemctl start mysqld
 sudo mysql -V
@@ -51,6 +52,7 @@ grep -i "memory_limit" /etc/php.ini
 
 # check max_execution_time setting
 grep "max_execution_time" ?etc/php.ini
+
 
 # s3 script to copy data from s3
 sudo su
