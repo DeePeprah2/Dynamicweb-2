@@ -1,0 +1,7 @@
+# in atall and configure the application 
+
+# command to download the provided code from s3 bucket to the '/var/www/html'
+aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql /var/www/html
+
+# change current directory to the html 
+cd /var/wwww/html
