@@ -1,3 +1,4 @@
+# EC2 Appache script
 # Update the package index
 sudo yum update
 
@@ -50,3 +51,20 @@ grep -i "memory_limit" /etc/php.ini
 
 # check max_execution_time setting
 grep "max_execution_time" ?etc/php.ini
+
+# s3 script to copy data from s3
+sudo su
+# command to install httpd on ec2 instance
+yum install httpd
+# command to enable httpd
+systemctl enable httpd
+# command to start httpd 
+systemctl start httpd
+# change from current directory to html directory 
+cd /var/www/html 
+# copy Application codt to html directory 
+aws s3 sync s3://dee-app-bucket /var/www/html
+unzip nest-app.zip
+rm -f nest-app.zip
+
+mv nest-app/*  /var/www/html
