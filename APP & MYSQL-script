@@ -1,4 +1,4 @@
-# EC2 Appache script
+# STEP1A:  EC2 Appache script
 # Update the package index
 sudo yum update
 
@@ -54,7 +54,9 @@ grep -i "memory_limit" /etc/php.ini
 grep "max_execution_time" ?etc/php.ini
 
 
-# s3 script to copy data from s3
+
+
+# STEP1B : s3 script to copy data from s3
 sudo su
 # command to install httpd on ec2 instance
 yum install httpd

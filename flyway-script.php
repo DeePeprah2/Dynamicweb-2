@@ -1,6 +1,7 @@
+
 # flyway script
 # command to download flyway
-wget -qO- https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/9.21.1/flyway-commandline-9.21.1-linux-x64.tar.gz | tar -xvz && sudo ln -s `pwd`/flyway-9.21.1/flyway /usr/local/bin 
+wget -q- https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/9.21.1/flyway-commandline-9.21.1-linux-x64.tar.gz | tar -xvz && sudo ln -s `pwd`/flyway-9.21.1/flyway /usr/local/bin 
 
 # change directory to flyway directory 
 cd flyway-9.21.1
