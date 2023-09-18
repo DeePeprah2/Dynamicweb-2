@@ -1,5 +1,26 @@
+
+
 # APP Configuration
 # nest app sript 
+
+# install and configure the application 
+
+# command to download the provided code from s3 bucket to the '/var/www/html'
+aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql /var/www/html
+
+# change current directory to the html 
+cd /var/wwww/html
+
+# command to unzip  and extract content for the application 
+unzip nest-app.zip
+rm -f nest-app.zip
+
+# This command to copy all files, including hidden ones, from the 'nest-app' directory to the '/var/www/html/'.
+sudo cp -R nest-app/. /var/www/html/
+
+# This command to delet the 'nest-app' directory and the 'nest-app.zip' file.
+sudo rm -rf nest-app nest-app.zip
+
 # Step 2 of deploying Dynamic web
 # command to to give permission to env file APP_URL=enter your domain name
 chmod -R 777 /var/www/html
@@ -20,7 +41,8 @@ sed -i 's|^DB_USERNAME=.*|DB_USERNAME="Deepro"|' /var/www/html/.env
 # command to use sed to search .env file for a line that starts wiith DB_PASSWORD replace everything after the = character with the domain name and database credential
 sed -i 's|^DB_PASSWORD=.*|DB_PASSWORD="Deepro12345"|' /var/www/html/.env
 
-
+#  command to restart the Apache server
+sudo service httpd restart
 
 # Final step 
 # Replace the 'AppServiceProvider.php' file 
