@@ -36,7 +36,7 @@ sudo sed -i 's/^\(max_execution_time\s*=\s*\).*/\1300/' /etc/php.ini
 # check the command worked
 # cat httpd.conf | grep AllowOverride
 # enable mod_rewrite on ec2
-sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
+sudo sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
 
 # check PHP version
 php -v
@@ -54,21 +54,3 @@ grep -i "memory_limit" /etc/php.ini
 grep "max_execution_time" ?etc/php.ini
 
 
-
-
-# STEP1B : s3 script to copy data from s3
-sudo su
-# command to install httpd on ec2 instance
-yum install httpd
-# command to enable httpd
-systemctl enable httpd
-# command to start httpd 
-systemctl start httpd
-# change from current directory to html directory 
-cd /var/www/html 
-# copy Application codt to html directory 
-aws s3 sync s3://dee-app-bucket /var/www/html
-unzip nest-app.zip
-rm -f nest-app.zip
-
-mv nest-app/*  /var/www/html
