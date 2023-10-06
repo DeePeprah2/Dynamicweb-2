@@ -8,18 +8,17 @@ wget -q- https://download.red-gate.com/maven/release/org/flywaydb/enterprise/fly
 sudo ln -s $|(pwd)/flywayflyway-9.21.1 /usr/local/bin
 
 # change directory to flyway directory 
-cd flyway-9.21.1
-
+#cd flyway-9.21.1
 # remove already sql file in flyway directory
-rm -rf sql
+#rm -rf sql
 
 # make a new sql directory
 sudo mkdir sql
 
 # 4b. command to copy file from aws , cd into flyway folder to use the command below
-aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql /home/ec2-user/flyway-9.22.2/sql
+aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql /home/ec2-user/flyway-9.21.1/sql
 
-# run flyway migrate command
+# run flyway migrate command using rds Endpoint , database name then username and password 
 flyway -url=jdbc:mysql://dbdatabase-1.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com:3306/deebio \
 -user=dee\
 -password=dee12345\
