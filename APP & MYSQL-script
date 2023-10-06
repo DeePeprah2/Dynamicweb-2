@@ -19,19 +19,23 @@ sudo ls -lrt
 # Install the MySQL server
 sudo dnf install mysql80-community-release-el9-1.noarch.rpm
 dnf repolist enabled | grep "mysql.*-community.*" 
-
 sudo dnf install mysql-community-server -y
 
-
-# Start the MySQL server
+# Start and enable MySQL server
 sudo systemctl start mysqld
+sudo systemctl enabel msqdld
 sudo mysql -V
 
-# Install PHP-CURL
-sudo yum install php-curl
+# Install cURLand  PHP-CURL packages
+sudo yum install curl liburl liburl-devel php-curl --allowerasing -y
+
+# Restart the PHP-FPM service to apply the changes
+sudo service php-fpm restart
 
 # change  the max_execution_time value to 300 in the php.ini using sed
-sudo sed -i 's/^\(max_execution_time\s*=\s*\).*/\1300/' /etc/php.ini
+sudo sed -i 's/^;*max_execution_time\s*=.*/max_execution_time = 300/' /etc/php.ini
+#change  the memory_limit = 128M in the php.ini using sed 
+sudo sed -i 's/^;*memory_limit\s*=.*/memory_limit = 128M/' /etc/php.ini
 
 # check the command worked
 # cat httpd.conf | grep AllowOverride

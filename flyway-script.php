@@ -13,4 +13,10 @@ rm -rf sql
 mkdir sql
 
 # command to copy file from aws , cd into flyway folder to use the command below
-aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql /home/ec2-user/flyway-9.21.1/sql
+aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql /home/ec2-user/flyway-9.22.2/sql
+# run flyway migrate command
+flyway -url=jdbc:mysql://dbdatabase-1.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com:3306/deebio \
+-user=dee\
+-password=dee12345\
+-locations=filesystem:sql \
+migrate
