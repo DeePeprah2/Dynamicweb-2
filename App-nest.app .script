@@ -1,19 +1,16 @@
 
-
 # APP Configuration
 # nest app sript 
 
 # install and configure the application 
 
-# command to download the provided code from s3 bucket to the '/var/www/html'
+# 4a. command to download the provided code from s3 bucket to the '/var/www/html'
 aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql /var/www/html
 
 # change current directory to the html 
 cd /var/wwww/html
-
 # command to unzip  and extract content for the application 
-unzip nest-app.zip
-rm -f nest-app.zip
+sudo unzip nest-app.zip
 
 # This command to copy all files, including hidden ones, from the 'nest-app' directory to the '/var/www/html/'.
 sudo cp -R nest-app/. /var/www/html/
@@ -22,6 +19,7 @@ sudo cp -R nest-app/. /var/www/html/
 sudo rm -rf nest-app nest-app.zip
 
 # Step 2 of deploying Dynamic web
+
 # command to to give permission to env file APP_URL=enter your domain name
 chmod -R 777 /var/www/html
 chmod -R 777 storage/
