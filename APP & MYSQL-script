@@ -17,8 +17,8 @@ sudo yum install php-cli php-fpm php-mysqlnd php-bcmath php-ctype php-fileinfo p
 sudo wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm 
 sudo ls -lrt
 # Install the MySQL server version 8
-sudo dnf install mysql80-community-release-el9-1.noarch.rpm
-dnf repolist enabled | grep "mysql.*-community.*" 
+sudo dnf install -y mysql80-community-release-el9-1.noarch.rpm
+sudo dnf repolist enabled | grep "mysql.*-community.*" 
 sudo dnf install mysql-community-server -y
 # Start and enable MySQL server
 sudo systemctl start mysqld
@@ -34,11 +34,16 @@ sudo service php-fpm restart
 sudo sed -i 's/^;*max_execution_time\s*=.*/max_execution_time = 300/' /etc/php.ini
 #f.ii change  the memory_limit = 128M in the php.ini using sed 
 sudo sed -i 's/^;*memory_limit\s*=.*/memory_limit = 128M/' /etc/php.ini
+#command to check if changes are done 
+#grep "memory_limit = 128M" /etc/php.ini
+#grep "max_execution_time = 300" /etc/php.ini
+
 
 # check the command worked
 # cat httpd.conf | grep AllowOverride
 #3g. enable mod_rewrite on ec2
 sudo sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
+#grep -E '<Directory "\/var\/www\/html">|<\/Directory>' /etc/httpd/conf/httpd.conf | grep "AllowOverride All"
 
 # check PHP version
 php -v
