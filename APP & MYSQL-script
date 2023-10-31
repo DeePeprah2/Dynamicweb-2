@@ -61,3 +61,67 @@ grep -i "memory_limit" /etc/php.ini
 grep "max_execution_time" ?etc/php.ini
 
 
+# STEP1:  EC2 Appache script
+# Update the package index
+sudo yum update -y
+
+# Install Apache HTTP Server
+sudo yum install httpd -y
+
+#3a. install Apache
+sudo systemctl start httpd
+sudo systemctl enable httpd
+
+#3b&c install php 8 along with several necessary executions for the application to run
+sudo yum install php -y
+sudo yum install php-cli php-fpm php-mysqlnd php-bcmath php-ctype php-fileinfo php-json php-mbstring php-openssl php-pdo php-gd php-tokenizer php-xml -y
+ 
+#3d. command to install mysql community 
+sudo wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm 
+sudo ls -lrt
+
+# Install the MySQL server version 8
+sudo dnf install -y mysql80-community-release-el9-1.noarch.rpm
+dnf repolist enabled | grep "mysql.*-community.*" 
+sudo dnf install mysql-community-server -y
+
+# Start and enable MySQL server
+sudo systemctl start mysqld
+sudo systemctl enable mysqld
+
+
+#3f. Install cURLand  PHP-CURL packages
+sudo yum install curl libcurl libcurl-devel php-curl --allowerasing -y
+
+# Restart the PHP-FPM service to apply the changes
+sudo service php-fpm restart
+
+#3f.i.change  the max_execution_time value to 300 in the php.ini using sed
+sudo sed -i 's/^;max_execution_time\s=.*/max_execution_time = 300/' /etc/php.ini
+#f.ii change  the memory_limit = 128M in the php.ini using sed 
+sudo sed -i 's/^;memory_limit\s=.*/memory_limit = 128M/' /etc/php.ini
+#command to check if changes are done 
+#grep "memory_limit = 128M" /etc/php.ini
+#grep "max_execution_time = 300" /etc/php.ini
+
+
+# check the command worked
+# cat httpd.conf | grep AllowOverride
+#3g. enable mod_rewrite on ec2
+sudo sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
+#grep -E '<Directory "\/var\/www\/html">|<\/Directory>' /etc/httpd/conf/httpd.conf | grep "AllowOverride All"
+
+# check PHP version
+php -v
+
+# list installed PHP modules 
+php -m
+
+# check MySQL service status
+mysql -v
+
+# check memory_limit setting
+grep -i "memory_limit" /etc/php.ini
+
+# check max_execution_time setting
+grep "max_execution_time" ?etc/php.ini
