@@ -19,8 +19,8 @@ sudo mkdir sql
 aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql /home/ec2-user/flyway-9.21.1/sql
 
 # run flyway migrate command using rds Endpoint , database name then username and password 
-flyway -url=jdbc:mysql://deedb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com:3306/deedb \
--user=deebio\
--password=dee12345\
--locations=filesystem:sql \
+flyway -url=jdbc:mysql://testdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com:3306/adwoadb \
+-user=dee \
+-password=dee12345 \
+-locations=filesystem:sql \
 migrate
