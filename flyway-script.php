@@ -5,12 +5,12 @@
 wget -qO- https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/9.22.2/flyway-commandline-9.22.2-linux-x64.tar.gz | tar -xvz && sudo ln -s `pwd`/flyway-9.22.2/flyway /usr/local/bin
 
 # create a symbolic line to make flyway accessible globaly
-sudo ln -s $|(pwd)/flywayflyway-9.21.1 /usr/local/bin
+# Sudo ln -s $|(pwd)/flywayflyway-9.21.1 /usr/local/bin
 
 # change directory to flyway directory 
-#cd flyway-9.22.2
+cd flyway-9.22.2
 # remove already sql file in flyway directory
-#rm -rf sql
+rm -rf sql
 
 # make a new sql directory
 sudo mkdir sql

@@ -5,7 +5,7 @@
 # install and configure the application 
 
 # 4a. command to download the provided code from s3 bucket to the '/var/www/html'
-aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql /var/www/html
+aws s3 cp s3://dee-app-bucket/nest-app.zip /var/www/html
 
 # change current directory to the html 
 cd /var/wwww/html
@@ -28,16 +28,16 @@ chmod -R 777 storage/
 sudo sed -i "/^APP_URL=/s/.*/APP_URL=www.peprah4jd.click/" .env
 
 # command to use sed to search for the .env file for a line that starts with DB_HOST= and replace everything after the = character with the domain name and database credential
-sed -i 's|^DB_HOST=.*|DB_HOST="prodb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com"|' /var/www/html/.env
+sed -i 's|^DB_HOST=.*|DB_HOST="testdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com"|' /var/www/html/.env
 
 # command to use sed to search .env file for a line that starts wirh DB_DATABASE replace everything after the = character with the domain name and database credential
-sed -i 's|^DB_DATABASE=.*|DB_DATABASE="Deepro"|' /var/www/html/.env
+sed -i 's|^DB_DATABASE=.*|DB_DATABASE="adwoadb"|' /var/www/html/.env
 
 # command to use sed to search .env file for a line that starts wiith DB_USERNAME replace everything after the = character with the domain name and database credential
-sed -i 's|^DB_USERNAME=.*|DB_USERNAME="Deepro"|' /var/www/html/.env
+sed -i 's|^DB_USERNAME=.*|DB_USERNAME="dee"|' /var/www/html/.env
 
 # command to use sed to search .env file for a line that starts wiith DB_PASSWORD replace everything after the = character with the domain name and database credential
-sed -i 's|^DB_PASSWORD=.*|DB_PASSWORD="Deepro12345"|' /var/www/html/.env
+sed -i 's|^DB_PASSWORD=.*|DB_PASSWORD="dee12345"|' /var/www/html/.env
 
 #  command to restart the Apache server
 sudo service httpd restart
