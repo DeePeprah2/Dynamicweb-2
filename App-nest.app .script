@@ -4,11 +4,13 @@
 
 # install and configure the application 
 
-# 4a. command to download the provided code from s3 bucket to the '/var/www/html'
-aws s3 cp s3://dee-app-bucket/nest-app.zip /var/www/html
-
 # change current directory to the html 
 cd /var/wwww/html
+
+# 4a. in the html directory, command to download the provided code from s3 bucket to the '/var/www/html'
+sudo aws s3 cp s3://dee-app-bucket/nest-app.zip .
+
+
 # command to unzip  and extract content for the application 
 sudo unzip nest-app.zip
 
@@ -20,21 +22,21 @@ sudo rm -rf nest-app nest-app.zip
 
 # Step 2 of deploying Dynamic web
 
-# command to to give permission to env file APP_URL=enter your domain name
-chmod -R 777 /var/www/html
-chmod -R 777 storage/
+# still in the html directory , run the command to to give permission to env file APP_URL=enter your domain name
+sudo chmod -R 777 /var/www/html
+sudo chmod -R 777 storage/
 
 # command to search for the .env file for a line that starts with APP_URL= and replace everything after the = character with the domain name and database credential 
 sudo sed -i "/^APP_URL=/s/.*/APP_URL=www.peprah4jd.click/" .env
 
 # command to use sed to search for the .env file for a line that starts with DB_HOST= and replace everything after the = character with the domain name and database credential
-sed -i 's|^DB_HOST=.*|DB_HOST="testdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com"|' /var/www/html/.env
+sudo sed -i 's|^DB_HOST=.*|DB_HOST="testdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com"|' /var/www/html/.env
 
 # command to use sed to search .env file for a line that starts wirh DB_DATABASE replace everything after the = character with the domain name and database credential
-sed -i 's|^DB_DATABASE=.*|DB_DATABASE="adwoadb"|' /var/www/html/.env
+sudo sed -i 's|^DB_DATABASE=.*|DB_DATABASE="adwoadb"|' /var/www/html/.env
 
 # command to use sed to search .env file for a line that starts wiith DB_USERNAME replace everything after the = character with the domain name and database credential
-sed -i 's|^DB_USERNAME=.*|DB_USERNAME="dee"|' /var/www/html/.env
+sudo sed -i 's|^DB_USERNAME=.*|DB_USERNAME="dee"|' /var/www/html/.env
 
 # command to use sed to search .env file for a line that starts wiith DB_PASSWORD replace everything after the = character with the domain name and database credential
 sed -i 's|^DB_PASSWORD=.*|DB_PASSWORD="dee12345"|' /var/www/html/.env
