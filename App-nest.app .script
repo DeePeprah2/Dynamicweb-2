@@ -1,77 +1,44 @@
 
-# APP Configuration
-# nest app sript 
+#
+## Install install and configure the application.
+#
 
-# install and configure the application 
+# This command downloads the contents of the specified S3 bucket to the '/var/www/html' directory on the EC2 instance
+sudo aws s3 sync s3://dee-app-bucket /var/www/html
 
-# change current directory to the html 
-cd /var/wwww/html
+# This command changes the current working directory to '/var/www/html', which is the standard directory for hosting web pages on a Unix-based server
+cd /var/www/html
 
-# 4a. in the html directory, command to download the provided code from s3 bucket to the '/var/www/html'
-sudo aws s3 cp s3://dee-app-bucket/nest-app.zip .
-
-
-# command to unzip  and extract content for the application 
+# This command is used to extract the contents of the application code zip file that was previously downloaded from the S3 bucket
 sudo unzip nest-app.zip
 
-# This command to copy all files, including hidden ones, from the 'nest-app' directory to the '/var/www/html/'.
+# This command recursively copies all files, including hidden ones, from the 'nest-app' directory to the '/var/www/html/'.
 sudo cp -R nest-app/. /var/www/html/
 
-# This command to delet the 'nest-app' directory and the 'nest-app.zip' file.
+# This command permanently deletes the 'nest-app' directory and the 'nest-app.zip' file.
 sudo rm -rf nest-app nest-app.zip
 
-# Step 2 of deploying Dynamic web
-
-# still in the html directory , run the command to to give permission to env file APP_URL=enter your domain name
+# This command set permissions 777 for the '/var/www/html' directory and the 'storage/' directory
 sudo chmod -R 777 /var/www/html
 sudo chmod -R 777 storage/
 
-# command to search for the .env file for a line that starts with APP_URL= and replace everything after the = character with the domain name and database credential 
-sudo sed -i "/^APP_URL=/s/.*/APP_URL=www.peprah4jd.click/" .env
+# This command use sed to search the .env file for a line that starts with APP_URL= and replace everything after the = character with the app's domain name
+sudo sed -i "/^APP_URL=/ s/=.*$/=https:\/\/www.peprah4jd.click\//" .env
 
-# command to use sed to search for the .env file for a line that starts with DB_HOST= and replace everything after the = character with the domain name and database credential
-sudo sed -i 's|^DB_HOST=.*|DB_HOST="testdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com"|' /var/www/html/.env
+# This command use sed to search the .env file for a line that starts with DB_HOST= and replace everything after the = character with the rds endpoint
+sudo sed -i "/^DB_HOST=/ s/=.*$/=testdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com/" .env
 
-# command to use sed to search .env file for a line that starts wirh DB_DATABASE replace everything after the = character with the domain name and database credential
-sudo sed -i 's|^DB_DATABASE=.*|DB_DATABASE="adwoadb"|' /var/www/html/.env
+# This command use sed to search the .env file for a line that starts with DB_DATABASE= and replace everything after the = character with the rds database name
+sudo sed -i "/^DB_DATABASE=/ s/=.*$/=adwoadb/" .env
 
-# command to use sed to search .env file for a line that starts wiith DB_USERNAME replace everything after the = character with the domain name and database credential
-sudo sed -i 's|^DB_USERNAME=.*|DB_USERNAME="dee"|' /var/www/html/.env
+# This command use sed to search the .env file for a line that starts with DB_USERNAME= and replace everything after the = character with the rds database username
+sudo sed -i "/^DB_USERNAME=/ s/=.*$/=dee/" .env
 
-# command to use sed to search .env file for a line that starts wiith DB_PASSWORD replace everything after the = character with the domain name and database credential
-sudo sed -i 's|^DB_PASSWORD=.*|DB_PASSWORD="dee12345"|' /var/www/html/.env
+# This command use sed to search the .env file for a line that starts with DB_PASSWORD= and replace everything after the = character with the rds database password
+sudo sed -i "/^DB_PASSWORD=/ s/=.*$/=dee12345/" .env
 
-#  command to restart the Apache server
+# This command will restart the Apache server
 sudo service httpd restart
 
-# Final step 
-# Replace the 'AppServiceProvider.php' file 
-# step 3 of deploying dynamic web
 
 
-
-<?php
-
-namespace App\Providers;
-
-use Illuminate\Support\ServiceProvider;
-
-class AppServiceProvider extends ServiceProvider
-{
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        if (env('APP_ENV') === 'production') {\Illuminate\Support\Facades\URL::forceScheme('https');}
-        //
-    }
-}
