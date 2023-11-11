@@ -1,65 +1,61 @@
+#
+## Install software necessary for the application to run
+#
 
-# STEP1:  EC2 Appache script
-# Update the package index
+# This command indicates that the script should be interpreted and executed using the Bash shell
+#!/bin/bash
+
+# This command updates all the packages on the server to their latest versions
 sudo yum update -y
 
-# Install Apache HTTP Server
-sudo yum install httpd -y
-
-#3a. install Apache
+# This series of commands installs the Apache web server, enables it to start on boot, and then starts the server immediately
+sudo yum install -y httpd
+sudo systemctl enable httpd 
 sudo systemctl start httpd
-sudo systemctl enable httpd
 
-#3b&c install php 8 along with several necessary executions for the application to run
-sudo yum install php -y
-sudo yum install php-cli php-fpm php-mysqlnd php-bcmath php-ctype php-fileinfo php-json php-mbstring php-openssl php-pdo php-gd php-tokenizer php-xml -y
- 
-#3d. command to install mysql community 
+## This command installs PHP 8 along with several necessary extensions for the application to run
+sudo dnf install -y php php-cli php-fpm php-mysqlnd php-bcmath php-ctype php-fileinfo php-json php-mbstring php-openssl php-pdo php-gd php-tokenizer php-xml
+
+## These commands Installs MySQL version 8
+# Install the MySQL Community repository
 sudo wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm 
-sudo ls -lrt
-
-# Install the MySQL server version 8
-sudo dnf install -y mysql80-community-release-el9-1.noarch.rpm
-dnf repolist enabled | grep "mysql.*-community.*" 
-sudo dnf install mysql-community-server -y
-
-# Start and enable MySQL server
+#
+# Install the MySQL server
+sudo dnf install -y mysql80-community-release-el9-1.noarch.rpm 
+dnf repolist enabled | grep "mysql.*-community.*"
+sudo dnf install -y mysql-community-server 
+#
+# Start and enable the MySQL server
 sudo systemctl start mysqld
 sudo systemctl enable mysqld
 
-
-#3f. Install cURLand  PHP-CURL packages
-sudo yum install curl libcurl libcurl-devel php-curl --allowerasing -y
+# Install the cURL and PHP cURL packages
+sudo yum install -y curl libcurl libcurl-devel php-curl --allowerasing
 
 # Restart the PHP-FPM service to apply the changes
 sudo service php-fpm restart
 
-#3f.i.change  the max_execution_time value to 300 in the php.ini using sed
-sudo sed -i 's/^;max_execution_time\s=.*/max_execution_time = 300/' /etc/php.ini
-#f.ii change  the memory_limit = 128M in the php.ini using sed 
-sudo sed -i 's/^;memory_limit\s=.*/memory_limit = 128M/' /etc/php.ini
-#command to check if changes are done 
-#grep "memory_limit = 128M" /etc/php.ini
-#grep "max_execution_time = 300" /etc/php.ini
+# Update the settings, memory_limit to 128M and max_execution_time to 300 in the php.ini file
+sudo sed -i 's/^\s*;\?\s*memory_limit =.*/memory_limit = 128M/' /etc/php.ini
+sudo sed -i 's/^\s*;\?\s*max_execution_time =.*/max_execution_time = 300/' /etc/php.ini
 
-
-# check the command worked
-# cat httpd.conf | grep AllowOverride
-#3g. enable mod_rewrite on ec2
+# This command enables the 'mod_rewrite' module in Apache on an EC2 Linux instance. It allows the use of .htaccess files for URL rewriting and other directives in the '/var/www/html' directory
 sudo sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
-#grep -E '<Directory "\/var\/www\/html">|<\/Directory>' /etc/httpd/conf/httpd.conf | grep "AllowOverride All"
 
-# check PHP version
+# Check PHP version
 php -v
 
-# list installed PHP modules 
+# List installed PHP modules
 php -m
 
-# check MySQL service status
-mysql -v
+# Check MySQL version
+mysql -V
 
-# check memory_limit setting
+# Check MySQL service status
+systemctl status mysqld
+
+# Check memory_limit setting
 grep -i "memory_limit" /etc/php.ini
 
-# check max_execution_time setting
-grep "max_execution_time" ?etc/php.ini
+# Check max_execution_time setting
+grep "max_execution_time" /etc/php.ini
