@@ -9,7 +9,7 @@ sudo ln -s $(pwd)/flyway-9.20.0/flyway /usr/local/bin
 sudo mkdir sql
 
 # Download the migration SQL script from AWS S3
-aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql sql/
+sudo aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql sql/
 
 # Run Flyway migration
 sudo flyway -url=jdbc:mysql://testdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com:3306/adwoadb \
