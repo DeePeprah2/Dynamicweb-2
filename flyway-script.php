@@ -1,23 +1,19 @@
 
-# bin! Bash
-# flyway script
-# command to download flyway
-wget -qO- https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/9.22.2/flyway-commandline-9.22.2-linux-x64.tar.gz | tar -xvz && sudo ln -s `pwd`/flyway-9.22.2/flyway /usr/local/bin
+# Download and extract Flyway
+sudo wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/9.20.0/flyway-commandline-9.20.0-linux-x64.tar.gz | tar -xvz
 
-# change directory to flyway directory 
-cd flyway-9.22.2
-# remove already sql file in flyway directory
-rm -rf sql
+# Create a symbolic link to make Flyway accessible globally
+sudo ln -s $(pwd)/flyway-9.20.0/flyway /usr/local/bin
 
-# make a new sql directory
+# Create the SQL directory for migrations
 sudo mkdir sql
 
-# 4b. command to copy file from aws , cd into flyway folder to use the command below
-aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql /home/ec2-user/flyway-9.22.2/sql
+# Download the migration SQL script from AWS S3
+aws s3 cp s3://dee-data-migration-bucket/V1__nest.sql sql/
 
-# run flyway migrate command using rds Endpoint , database name then username and password 
-flyway -url=jdbc:mysql://testdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com:3306/adwoadb \
--user=dee \
--password=dee12345 \
--locations=filesystem:sql \
-migrate
+# Run Flyway migration
+sudo flyway -url=jdbc:mysql://testdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com:3306/adwoadb \
+  -user=dee \
+  -password=dee12345 \
+  -locations=filesystem:sql \
+  migrate
