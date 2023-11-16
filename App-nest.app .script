@@ -26,16 +26,16 @@ sudo chmod -R 777 storage/
 sudo sed -i "/^APP_URL=/ s/=.*$/=https:\/\/www.peprah4jd.click\//" .env
 
 # This command use sed to search the .env file for a line that starts with DB_HOST= and replace everything after the = character with the rds endpoint
-sudo sed -i "/^DB_HOST=/ s/=.*$/=testdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com/" .env
+sudo sed -i "/^DB_HOST=/ s/=.*$/=thisdb.c3qgmy74n7ea.eu-west-2.rds.amazonaws.com/" .env
 
 # This command use sed to search the .env file for a line that starts with DB_DATABASE= and replace everything after the = character with the rds database name
-sudo sed -i "/^DB_DATABASE=/ s/=.*$/=adwoadb/" .env
+sudo sed -i "/^DB_DATABASE=/ s/=.*$/=deedb/" .env
 
 # This command use sed to search the .env file for a line that starts with DB_USERNAME= and replace everything after the = character with the rds database username
-sudo sed -i "/^DB_USERNAME=/ s/=.*$/=dee/" .env
+sudo sed -i "/^DB_USERNAME=/ s/=.*$/=admin/" .env
 
 # This command use sed to search the .env file for a line that starts with DB_PASSWORD= and replace everything after the = character with the rds database password
-sudo sed -i "/^DB_PASSWORD=/ s/=.*$/=dee12345/" .env
+sudo sed -i "/^DB_PASSWORD=/ s/=.*$/=admin12345/" .env
 
 # This command will restart the Apache server
 sudo service httpd restart
